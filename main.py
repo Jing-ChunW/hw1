@@ -21,14 +21,17 @@ with open(cwb_filename) as csvfile:
 # Part. 3
 #=======================================
 # Analyze data depend on your group and store it to target_data like:
-# Retrive all data points which station id is "C0X260" as a list.
+# create a new list to store output data
 new_data = []
+# Retrive all data points which HUMD is not '-99.000' or '-999.000' as a list.
 filter_data = list(filter(lambda item: item['HUMD'] != '-99.000' and item['HUMD'] != '-999.000', data))
 for i in ['C0A880', 'C0F9A0', 'C0G640', 'C0R190', 'C0X260']:
+    # Retrive all data points which station_id equals to i which i is 'C0A880' in first loop and 'C0F9A0' in second loop and so on
     target_data = list(filter(lambda item: item['station_id'] == i, filter_data))
     sum = 0
     for j in target_data:
-        sum += float(j['HUMD'])
+        sum += float(j['HUMD']) # sum up all the desired HUMD
+    # set up output data
     if sum == 0:
         new_data.append([i,'None'])
     else:
